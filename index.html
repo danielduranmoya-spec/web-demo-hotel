@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Casa Lucerna · Hotel boutique junto al Teatro Romano de Mérida</title>
+  <meta name="description" content="Hotel boutique de 16 habitaciones a 300 metros del Teatro Romano de Mérida. Casa señorial de 1890 con patio, termas privadas y terraza con vistas al conjunto arqueológico. Reserva directa al mejor precio.">
+  <!-- Demo con datos ficticios: no indexar. Para un cliente real, borra esta línea. -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#141B33">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://danielduranmoya-spec.github.io/web-demo-hotel/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:site_name" content="Casa Lucerna">
+  <meta property="og:title" content="Casa Lucerna · Duerme a 300 metros del Teatro Romano">
+  <meta property="og:description" content="16 habitaciones, termas privadas y una terraza para ver anochecer sobre Augusta Emerita.">
+  <meta property="og:url" content="https://danielduranmoya-spec.github.io/web-demo-hotel/">
+  <meta property="og:image" content="https://danielduranmoya-spec.github.io/web-demo-hotel/img/og.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Italiana&family=Outfit:wght@200;300;400;500;600&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <link rel="modulepreload" href="vendor/three.module.min.js">
+  <script>document.documentElement.classList.add('js');</script>
+
+  <script type="importmap">
+  { "imports": { "three": "./vendor/three.module.min.js" } }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Hotel",
+    "name": "Casa Lucerna",
+    "description": "Hotel boutique de 16 habitaciones junto al Teatro Romano de Mérida (concepto de web, negocio ficticio).",
+    "url": "https://danielduranmoya-spec.github.io/web-demo-hotel/",
+    "image": "https://danielduranmoya-spec.github.io/web-demo-hotel/img/og.jpg",
+    "telephone": "+34600000000",
+    "email": "reservas@casalucerna.example",
+    "priceRange": "145 € - 380 €",
+    "starRating": { "@type": "Rating", "ratingValue": "4" },
+    "numberOfRooms": 16,
+    "checkinTime": "15:00",
+    "checkoutTime": "12:00",
+    "petsAllowed": false,
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Calle del Proscenio, 3",
+      "postalCode": "06800",
+      "addressLocality": "Mérida",
+      "addressRegion": "Badajoz",
+      "addressCountry": "ES"
+    },
+    "geo": { "@type": "GeoCoordinates", "latitude": 38.9157, "longitude": -6.3388 },
+    "amenityFeature": [
+      { "@type": "LocationFeatureSpecification", "name": "Termas privadas", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Terraza panorámica", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Wifi gratis", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Desayuno incluido", "value": true }
+    ],
+    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "212" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "¿Hay aparcamiento?", "acceptedAnswer": { "@type": "Answer", "text": "Sí, en un garaje concertado a 150 metros por 14 € al día. Avísanos al reservar y te guardamos plaza." } },
+      { "@type": "Question", "name": "¿Puedo reservar durante el Festival de Teatro Clásico?", "acceptedAnswer": { "@type": "Answer", "text": "Sí. Entre julio y agosto la estancia mínima es de dos noches y te ayudamos a conseguir entradas." } },
+      { "@type": "Question", "name": "¿Las termas están incluidas?", "acceptedAnswer": { "@type": "Answer", "text": "Cada huésped tiene una sesión privada de 60 minutos por estancia. Las siguientes cuestan 25 € por persona." } },
+      { "@type": "Question", "name": "¿Admitís niños?", "acceptedAnswer": { "@type": "Answer", "text": "Sí, a partir de 12 años. Es una casa pensada para el descanso." } }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#contenido">Saltar al contenido</a>
+
+  <div class="concept-bar" role="note">
+    Concepto de web 3D con datos ficticios · <a href="https://danielduranmoya-spec.github.io/" rel="noopener">Daniel Durán</a>
+  </div>
+
+  <header class="nav" data-nav>
+    <a class="brand" href="#inicio" aria-label="Casa Lucerna, inicio">
+      <svg class="brand__mark" viewBox="0 0 40 24" aria-hidden="true"><path d="M4 15c0-5 6-8 14-8s14 3 14 8-6 6-14 6S4 20 4 15Z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M32 13l6-1-1 4-6 1" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M36.5 11c-1.2-2.2.3-4.4 1.4-6 .6 2 1.6 3.6.2 6" fill="currentColor"/><circle cx="18" cy="13" r="2" fill="currentColor"/></svg>
+      <span>Casa Lucerna</span>
+    </a>
+    <button class="nav__toggle" aria-expanded="false" aria-controls="menu" data-menu-toggle>
+      <span class="sr-only">Abrir menú</span><span></span><span></span>
+    </button>
+    <nav id="menu" class="nav__menu" aria-label="Principal">
+      <a href="#casa">La casa</a>
+      <a href="#habitaciones">Habitaciones</a>
+      <a href="#recorrido">Recorrido</a>
+      <a href="#experiencias">Experiencias</a>
+      <a href="#ubicacion">Cómo llegar</a>
+      <a class="nav__cta" href="#reservar">Reservar</a>
+    </nav>
+  </header>
+
+  <main id="contenido">
+    <!-- 1. Inicio: viaje de cámara entre nubes hasta la lucerna (escena.js) -->
+    <section id="inicio" class="voyage" aria-label="Inicio" data-voyage>
+      <div class="voyage__stage">
+        <canvas class="voyage__canvas" data-scene aria-hidden="true"></canvas>
+        <div class="voyage__fallback" aria-hidden="true">
+          <svg viewBox="0 0 200 140"><defs><radialGradient id="fg" cx="50%" cy="40%"><stop offset="0" stop-color="#FFE3A0"/><stop offset="1" stop-color="#E9B44C" stop-opacity="0"/></radialGradient></defs><circle cx="150" cy="38" r="34" fill="url(#fg)"/><path d="M30 92c0-16 22-26 58-26s58 10 58 26-22 22-58 22-58-6-58-22Z" fill="#B8643F"/><path d="M140 84l26-6-4 14-24 6Z" fill="#B8643F"/><path d="M152 72c-6-10 2-20 6-28 3 10 9 18 2 28Z" fill="#FFD27A"/><ellipse cx="88" cy="74" rx="34" ry="7" fill="#9A4F31"/><circle cx="88" cy="74" r="3" fill="#3A1D12"/><path d="M30 92c-10 0-14-14-4-18" fill="none" stroke="#B8643F" stroke-width="6"/></svg>
+        </div>
+
+        <div class="voyage__copy">
+          <div class="voyage__step is-active" data-step="0">
+            <p class="eyebrow">Hotel boutique · Mérida</p>
+            <h1>Duerme donde<br>anochecía Augusta&nbsp;Emerita</h1>
+            <p class="lead">Dieciséis habitaciones en una casa señorial de 1890, a 300 metros del Teatro Romano.</p>
+            <div class="voyage__actions">
+              <a class="btn btn--gold" href="#reservar">Ver disponibilidad</a>
+              <span class="hint">Baja despacio <span aria-hidden="true">↓</span></span>
+            </div>
+          </div>
+          <div class="voyage__step" data-step="1">
+            <p class="eyebrow">I · El viaje</p>
+            <h2>Atraviesa dos mil años de cielo extremeño</h2>
+            <p class="lead">Las mismas puestas de sol rosadas que veían los legionarios de Augusto, ahora desde nuestra terraza.</p>
+          </div>
+          <div class="voyage__step" data-step="2">
+            <p class="eyebrow">II · Los arcos</p>
+            <h2>Entre el acueducto y el Guadiana</h2>
+            <p class="lead">Llegas a pie al Teatro, al Anfiteatro y al Templo de Diana. El coche se queda en el garaje.</p>
+          </div>
+          <div class="voyage__step" data-step="3">
+            <p class="eyebrow">III · La lucerna</p>
+            <h2>Una llama encendida para cada huésped</h2>
+            <p class="lead">Cada noche dejamos en tu mesilla una lucerna de barro hecha en Mérida. Te la llevas al irte.</p>
+            <button class="btn btn--ghost" type="button" data-flame-toggle aria-pressed="true">Apagar la lucerna</button>
+            <p class="hint hint--drag">Arrastra para girarla</p>
+          </div>
+        </div>
+
+        <ol class="voyage__progress" aria-hidden="true">
+          <li></li><li></li><li></li><li></li>
+        </ol>
+        <p class="voyage__quality" data-quality aria-hidden="true"></p>
+      </div>
+    </section>
+
+    <!-- 2. La casa -->
+    <section id="casa" class="section casa">
+      <div class="wrap casa__grid">
+        <div class="casa__intro reveal">
+          <p class="eyebrow">La casa</p>
+          <h2 class="display">Un palacete con patio, naranjos y el sonido de una fuente</h2>
+        </div>
+        <div class="casa__text reveal">
+          <p>Casa Lucerna fue la vivienda de una familia de bodegueros emeritenses. La rehabilitamos en 2024 respetando lo que ya era bueno: los techos de vigas, los suelos hidráulicos y el patio de columnas. Al excavar la bodega apareció un muro romano, que hoy puedes ver bajo un suelo de vidrio en la recepción.</p>
+          <p>Somos un hotel pequeño a propósito. Dieciséis habitaciones, un desayuno de producto de la Vía de la Plata y un equipo que te llama por tu nombre.</p>
+        </div>
+        <ul class="stats reveal" aria-label="Casa Lucerna en cifras">
+          <li><strong data-count="16">16</strong><span>habitaciones</span></li>
+          <li><strong data-count="300">300</strong><span>metros al Teatro Romano</span></li>
+          <li><strong data-count="1890">1890</strong><span>año de la casa</span></li>
+          <li><strong data-count="4.9" data-decimals="1">4,9</strong><span>valoración media de 212 huéspedes</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 3. Habitaciones -->
+    <section id="habitaciones" class="section rooms">
+      <div class="wrap">
+        <header class="section__head reveal">
+          <p class="eyebrow">Habitaciones</p>
+          <h2 class="display">Cuatro maneras de dormir en Mérida</h2>
+          <p class="section__sub">Todas con desayuno, cama de 180 o 200 cm, ducha de lluvia y amenities de aceite de oliva de la Serena.</p>
+        </header>
+
+        <div class="rooms__tabs" role="tablist" aria-label="Tipos de habitación" data-rooms-tabs></div>
+        <article class="room" data-room aria-live="polite">
+          <div class="room__visual" data-room-visual></div>
+          <div class="room__body">
+            <p class="eyebrow" data-room-kicker></p>
+            <h3 class="room__name" data-room-name></h3>
+            <p data-room-desc></p>
+            <ul class="room__facts" data-room-facts></ul>
+            <div class="room__price">
+              <span>desde</span> <strong data-room-price></strong> <span>/ noche</span>
+            </div>
+            <a class="btn btn--gold" href="#reservar" data-room-book>Reservar esta habitación</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 4. Vídeo interactivo -->
+    <section id="recorrido" class="section tour">
+      <div class="wrap">
+        <header class="section__head reveal">
+          <p class="eyebrow">Recorrido</p>
+          <h2 class="display">Una noche en Casa Lucerna</h2>
+          <p class="section__sub">Elige un capítulo o pulsa los puntos dorados que aparecen en el vídeo.</p>
+        </header>
+
+        <div class="player reveal" data-player>
+          <div class="player__frame">
+            <video class="player__video" data-video playsinline muted preload="metadata" poster="media/recorrido-poster.jpg" aria-label="Recorrido por Casa Lucerna">
+              <source src="media/recorrido.webm" type="video/webm">
+              <source src="media/recorrido.mp4" type="video/mp4">
+            </video>
+            <div class="player__hotspots" data-hotspots></div>
+            <button class="player__big" type="button" data-play-big aria-label="Reproducir el recorrido">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <aside class="player__card" data-hotspot-card hidden>
+              <button type="button" class="player__card-close" data-hotspot-close aria-label="Cerrar">×</button>
+              <h3 data-hotspot-title></h3>
+              <p data-hotspot-text></p>
+            </aside>
+          </div>
+          <div class="player__bar">
+            <button type="button" class="player__btn" data-play aria-label="Reproducir">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5v14l11-7z"/><path class="i-pause" d="M7 5h4v14H7zm6 0h4v14h-4z"/></svg>
+            </button>
+            <div class="player__timeline" data-timeline role="slider" tabindex="0" aria-label="Posición del vídeo" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+              <div class="player__buffer" data-progress></div>
+            </div>
+            <span class="player__time" data-time>0:00</span>
+          </div>
+          <ol class="player__chapters" data-chapters></ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Experiencias -->
+    <section id="experiencias" class="section exp">
+      <div class="wrap">
+        <header class="section__head reveal">
+          <p class="eyebrow">Experiencias</p>
+          <h2 class="display">Lo que no sale en las guías</h2>
+        </header>
+        <div class="exp__grid">
+          <article class="exp__card reveal">
+            <span class="exp__num">01</span>
+            <h3>Balnea, nuestras termas</h3>
+            <p>Tres baños a 18, 36 y 40 grados bajo la casa, inspirados en los de Alange. Sesión privada de 60 minutos incluida.</p>
+          </article>
+          <article class="exp__card reveal">
+            <span class="exp__num">02</span>
+            <h3>El Teatro antes de abrir</h3>
+            <p>Visita a las 8:30 con una arqueóloga, cuando la piedra aún está fría y no hay nadie. Martes y sábados, 35 € por persona.</p>
+          </article>
+          <article class="exp__card reveal">
+            <span class="exp__num">03</span>
+            <h3>Cena en la terraza</h3>
+            <p>Menú de cinco pases con ibérico de Jerez de los Caballeros, torta del Casar y vinos de la Ribera del Guadiana. Jueves a sábado.</p>
+          </article>
+          <article class="exp__card reveal">
+            <span class="exp__num">04</span>
+            <h3>Festival de Teatro Clásico</h3>
+            <p>En julio y agosto te conseguimos entradas y te prestamos cojín y manta para la grada. Vuelves a pie en cinco minutos.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Opiniones -->
+    <section class="section quotes" aria-label="Opiniones de huéspedes">
+      <div class="wrap">
+        <div class="quotes__track" data-quotes>
+          <blockquote class="quote is-active">
+            <p>«Abrimos la ventana y estaba el Teatro iluminado. La lucerna sigue encendiéndose en nuestro salón de Bilbao.»</p>
+            <footer>Aitziber y Jon · mayo de 2026</footer>
+          </blockquote>
+          <blockquote class="quote">
+            <p>«Las termas a medianoche, solos. No sé qué más puede pedirse a un hotel.»</p>
+            <footer>Lucía M. · Madrid</footer>
+          </blockquote>
+          <blockquote class="quote">
+            <p>«Nos consiguieron entradas para Medea un día antes. El desayuno, de los mejores de España.»</p>
+            <footer>Familia Ortega · Sevilla</footer>
+          </blockquote>
+        </div>
+        <div class="quotes__dots" data-quote-dots></div>
+      </div>
+    </section>
+
+    <!-- 7. Reserva -->
+    <section id="reservar" class="section book">
+      <div class="wrap book__grid">
+        <div class="book__intro reveal">
+          <p class="eyebrow">Reserva directa</p>
+          <h2 class="display">Al mejor precio, sin intermediarios</h2>
+          <p>Reservando aquí tienes un 8 % menos que en las plataformas, cancelación gratis hasta 72 horas antes y una botella de cava extremeño en la habitación.</p>
+          <p class="book__note">Es una demo: el formulario prepara un mensaje de WhatsApp con tu solicitud, no cobra nada.</p>
+        </div>
+        <form class="book__form reveal" data-book novalidate>
+          <div class="field">
+            <label for="b-room">Habitación</label>
+            <select id="b-room" name="room" data-book-room></select>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="b-in">Llegada</label>
+              <input id="b-in" name="in" type="date" required>
+            </div>
+            <div class="field">
+              <label for="b-out">Salida</label>
+              <input id="b-out" name="out" type="date" required>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="b-guests">Huéspedes</label>
+              <select id="b-guests" name="guests">
+                <option value="1">1</option><option value="2" selected>2</option><option value="3">3</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="b-name">Nombre</label>
+              <input id="b-name" name="name" type="text" autocomplete="name" required>
+            </div>
+          </div>
+          <label class="check">
+            <input type="checkbox" name="termas" checked> Reservar también mi sesión en las termas
+          </label>
+          <label class="check">
+            <input type="checkbox" name="privacy" required> He leído la <a href="privacidad.html">política de privacidad</a>
+          </label>
+          <div class="book__total" aria-live="polite">
+            <span data-book-nights>Elige las fechas</span>
+            <strong data-book-total>—</strong>
+          </div>
+          <p class="book__error" data-book-error role="alert"></p>
+          <button class="btn btn--gold btn--block" type="submit">Solicitar por WhatsApp</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- 8. Ubicación y preguntas -->
+    <section id="ubicacion" class="section where">
+      <div class="wrap where__grid">
+        <div class="reveal">
+          <p class="eyebrow">Cómo llegar</p>
+          <h2 class="display">En el centro del conjunto arqueológico</h2>
+          <address>
+            Calle del Proscenio, 3<br>06800 Mérida (Badajoz)<br>
+            <a href="tel:+34600000000">600 000 000</a> · <a href="mailto:reservas@casalucerna.example">reservas@casalucerna.example</a>
+          </address>
+          <ul class="where__list">
+            <li><span>Teatro Romano</span><span>4 min a pie</span></li>
+            <li><span>Templo de Diana</span><span>7 min a pie</span></li>
+            <li><span>Puente Romano</span><span>12 min a pie</span></li>
+            <li><span>Estación de tren</span><span>15 min a pie</span></li>
+            <li><span>Aeropuerto de Badajoz</span><span>45 min en coche</span></li>
+          </ul>
+        </div>
+        <div class="map reveal" data-map>
+          <div class="map__placeholder">
+            <p>El mapa de OpenStreetMap se carga desde un servidor externo.</p>
+            <button class="btn btn--ghost" type="button" data-map-load>Cargar mapa</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="wrap faq reveal">
+        <h2 class="display display--sm">Preguntas frecuentes</h2>
+        <details><summary>¿Hay aparcamiento?</summary><p>Sí, en un garaje concertado a 150 metros por 14 € al día. Avísanos al reservar y te guardamos plaza.</p></details>
+        <details><summary>¿Puedo reservar durante el Festival de Teatro Clásico?</summary><p>Sí. Entre julio y agosto la estancia mínima es de dos noches y te ayudamos a conseguir entradas.</p></details>
+        <details><summary>¿Las termas están incluidas?</summary><p>Cada huésped tiene una sesión privada de 60 minutos por estancia. Las siguientes cuestan 25 € por persona.</p></details>
+        <details><summary>¿Admitís niños?</summary><p>Sí, a partir de 12 años. Es una casa pensada para el descanso.</p></details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__grid">
+      <div>
+        <p class="footer__brand">Casa Lucerna</p>
+        <p>Hotel boutique · Registro turístico H-BA-00000 (ficticio)</p>
+      </div>
+      <nav aria-label="Textos legales">
+        <a href="aviso-legal.html">Aviso legal</a>
+        <a href="privacidad.html">Privacidad</a>
+        <a href="cookies.html">Cookies</a>
+        <button type="button" class="linklike" data-cookie-open>Preferencias de cookies</button>
+      </nav>
+      <p class="footer__credit">Web de concepto por <a href="https://danielduranmoya-spec.github.io/">Daniel Durán</a>. Negocio, datos y opiniones ficticios.</p>
+    </div>
+  </footer>
+
+  <div class="cookies" data-cookies hidden role="dialog" aria-label="Aviso de cookies" aria-live="polite">
+    <p>Esta web no usa cookies de seguimiento. Solo te preguntamos si quieres cargar el mapa de OpenStreetMap, que es un servicio externo. <a href="cookies.html">Más información</a>.</p>
+    <div class="cookies__actions">
+      <button class="btn btn--ghost" type="button" data-cookie="reject">Solo lo necesario</button>
+      <button class="btn btn--gold" type="button" data-cookie="accept">Aceptar el mapa</button>
+    </div>
+  </div>
+
+  <script src="script.js" defer></script>
+  <script type="module" src="escena.js"></script>
+</body>
+</html>

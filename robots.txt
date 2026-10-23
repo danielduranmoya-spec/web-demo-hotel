@@ -1,0 +1,4 @@
+# Demo con datos ficticios: no indexar. Para un cliente real, cambia a "Allow: /".
+User-agent: *
+Disallow: /
+Sitemap: https://danielduranmoya-spec.github.io/web-demo-hotel/sitemap.xml
