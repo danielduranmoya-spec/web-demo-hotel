@@ -150,6 +150,17 @@ p { margin: 0 0 1em; }
 .hint span { display: inline-block; animation: bob 1.8s ease-in-out infinite; }
 .hint--drag { margin-top: 1rem; }
 @keyframes bob { 50% { transform: translateY(5px); } }
+.epoch {
+  position: absolute; z-index: 2; right: calc(var(--gutter) + 30px); bottom: 34px; text-align: right;
+  display: grid; gap: 4px; pointer-events: none; transition: opacity .6s var(--ease);
+}
+.epoch__year {
+  font-family: var(--f-text); font-weight: 200; font-size: clamp(3rem, 8vw, 7.5rem); line-height: .9;
+  letter-spacing: -.05em; font-variant-numeric: tabular-nums; color: var(--oro);
+  text-shadow: 0 0 40px rgba(233, 180, 76, .45);
+}
+.epoch__era { font-size: .78rem; letter-spacing: .2em; text-transform: uppercase; opacity: .8; }
+.epoch.is-done { opacity: .25; }
 .voyage__progress {
   position: absolute; z-index: 2; right: var(--gutter); top: 50%; transform: translateY(-50%);
   list-style: none; margin: 0; padding: 0; display: grid; gap: 10px;
@@ -167,6 +178,9 @@ p { margin: 0 0 1em; }
   .voyage__progress { top: auto; bottom: auto; top: 96px; transform: none; right: 12px; }
   .voyage__progress li { height: 22px; }
   .voyage__quality { display: none; }
+  .epoch { right: auto; left: var(--gutter); top: 96px; bottom: auto; text-align: left; }
+  .epoch__year { font-size: clamp(2.6rem, 13vw, 4rem); }
+  .epoch.is-done { opacity: 0; }
 }
 @media (max-height: 520px) and (orientation: landscape) {
   .voyage__step h1, .voyage__step h2 { font-size: 2rem; margin-bottom: .6rem; }

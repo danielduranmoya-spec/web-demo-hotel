@@ -90,7 +90,16 @@
       const f = (p - LIMITES[i]) / (LIMITES[i + 1] - LIMITES[i]);
       b.style.setProperty('--p', Math.min(1, Math.max(0, f)).toFixed(3));
     });
+    // contador de años: del 25 a. C. a hoy
+    const k = Math.min(1, p / 0.8);
+    const yr = Math.round(-25 + (HOY + 25) * (k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2));
+    yearEl.textContent = yr < 0 ? `${-yr} a. C.` : yr === 0 ? '1 d. C.' : String(yr);
+    eraEl.textContent = (ERAS.find(e => yr < e[0]) || ERAS[ERAS.length - 1])[1];
+    epochEl.classList.toggle('is-done', p > 0.85);
   }
+  const HOY = new Date().getFullYear();
+  const ERAS = [[0, 'Fundación de Augusta Emerita'], [409, 'Capital de Lusitania'], [713, 'Mérida visigoda'], [1230, 'Mérida andalusí'], [1890, 'Encomienda de Santiago'], [1993, 'Se construye Casa Lucerna'], [2024, 'Patrimonio de la Humanidad'], [9999, 'Hoy · Casa Lucerna']];
+  const yearEl = $('[data-year]'), eraEl = $('[data-era]'), epochEl = $('.epoch');
   addEventListener('scroll', onVoyage, { passive: true });
   addEventListener('resize', onVoyage);
   onVoyage();

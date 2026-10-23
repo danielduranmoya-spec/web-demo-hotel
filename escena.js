@@ -1,13 +1,14 @@
 /*
   Casa Lucerna · escena 3D del inicio (three.js r180, en vendor/)
 
-  Animación «Aetheris Voyage»: al hacer scroll la cámara viaja a través de
-  capas de nubes de atardecer, cruza un arco del acueducto de los Milagros
-  y llega a una lucerna romana encendida delante de las columnas del Teatro.
+  Animación «Digital Epoch»: al hacer scroll un plano de escaneo dorado
+  recorre Mérida del año 25 a. C. a hoy y convierte en piedra los monumentos
+  dibujados en alambre, mientras la cámara baja en grúa sobre el acueducto
+  hasta una lucerna romana encendida delante de las columnas del Teatro.
 
   Todo se genera con código (sin modelos externos):
   - cielo con degradado y estrellas
-  - nubes: sprites con textura dibujada en un lienzo
+  - escaneo: aristas (EdgesGeometry) + plano con shader
   - acueducto y columnas: geometrías simples
   - lucerna: torno (LatheGeometry) + piquera + asa + llama con shader
 */
@@ -132,52 +133,6 @@ function init() {
   ground.position.set(0, -4, -120);
   scene.add(ground);
 
-  /* ---------- Nubes ---------- */
-  function cloudTexture(seed) {
-    const s = 256;
-    const c = document.createElement('canvas');
-    c.width = c.height = s;
-    const g = c.getContext('2d');
-    let r = seed;
-    const rnd = () => ((r = (r * 9301 + 49297) % 233280) / 233280);
-    for (let i = 0; i < 26; i++) {
-      const x = s * (0.22 + rnd() * 0.56);
-      const y = s * (0.35 + rnd() * 0.3);
-      const rad = s * (0.08 + rnd() * 0.18);
-      const grd = g.createRadialGradient(x, y, 0, x, y, rad);
-      grd.addColorStop(0, 'rgba(255,255,255,0.55)');
-      grd.addColorStop(1, 'rgba(255,255,255,0)');
-      g.fillStyle = grd;
-      g.beginPath(); g.arc(x, y, rad, 0, Math.PI * 2); g.fill();
-    }
-    const t = new THREE.CanvasTexture(c);
-    t.colorSpace = THREE.SRGBColorSpace;
-    return t;
-  }
-  const cloudTex = [cloudTexture(7), cloudTexture(42), cloudTexture(311)];
-  const clouds = [];
-  const cloudCount = tier === 'alta' ? 90 : 55;
-  const tintNear = new THREE.Color(0xf2b294);
-  const tintHigh = new THREE.Color(0x8d76b0);
-  for (let i = 0; i < cloudCount; i++) {
-    const z = 2 - Math.random() * 125;
-    if (Math.abs(z - AQUEDUCT_Z) < 6) continue;           // deja ver el arco
-    const side = Math.random() < 0.5 ? -1 : 1;
-    const x = side * (3 + Math.random() * 16);
-    const y = -2.5 + Math.random() * 9;
-    const mat = new THREE.SpriteMaterial({
-      map: cloudTex[i % 3], transparent: true, depthWrite: false, opacity: 0.8,
-      color: tintNear.clone().lerp(tintHigh, THREE.MathUtils.clamp((y + 2) / 9, 0, 1)),
-    });
-    const sp = new THREE.Sprite(mat);
-    const sc = 6 + Math.random() * 10;
-    sp.scale.set(sc * 1.6, sc, 1);
-    sp.position.set(x, y, z);
-    sp.userData = { base: (z > -14 ? 0.22 : 0.32) + Math.random() * 0.3, drift: (Math.random() - 0.5) * 0.25 };
-    scene.add(sp);
-    clouds.push(sp);
-  }
-
   /* ---------- Acueducto (dos pisos de arcos) ---------- */
   const granito = new THREE.MeshStandardMaterial({ color: COLORES.granito, roughness: 0.9 });
   const ladrillo = new THREE.MeshStandardMaterial({ color: 0x9c4f36, roughness: 0.85 });
@@ -255,6 +210,49 @@ function init() {
   const plinth = new THREE.Mesh(new THREE.CylinderGeometry(1.1, 1.25, 3.2, 32), marmol);
   plinth.position.set(0, -2.75, LAMP_Z);
   scene.add(plinth);
+
+  /* ---------- Digital Epoch: monumentos en alambre que el escaneo vuelve sólidos ---------- */
+  const lineMat = new THREE.LineBasicMaterial({ color: COLORES.oro, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, fog: false });
+  const pieces = [];
+  scene.updateMatrixWorld(true);
+  const wp = new THREE.Vector3();
+  for (const root of [aqueduct, far, theatre, plinth]) {
+    root.traverse(o => {
+      if (!o.isMesh) return;
+      o.material = o.material.clone();
+      o.material.transparent = true;
+      const line = new THREE.LineSegments(new THREE.EdgesGeometry(o.geometry, 30), lineMat.clone());
+      o.add(line);
+      o.getWorldPosition(wp);
+      pieces.push({ mesh: o, line, z: wp.z, r: -1 });
+    });
+  }
+  const grid = new THREE.GridHelper(320, 160, COLORES.oro, COLORES.oro);
+  grid.material.transparent = true;
+  grid.material.opacity = 0.3;
+  grid.material.depthWrite = false;
+  grid.position.set(0, -3.98, -100);
+  scene.add(grid);
+  // plano de escaneo: velo dorado con borde brillante
+  const scan = new THREE.Mesh(
+    new THREE.PlaneGeometry(120, 34),
+    new THREE.ShaderMaterial({
+      transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide, fog: false,
+      uniforms: { uA: { value: 1 } },
+      vertexShader: `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.); }`,
+      fragmentShader: `uniform float uA; varying vec2 vUv;
+        void main(){
+          float edge = smoothstep(0.0, 0.5, 1.0 - abs(vUv.x - 0.5) * 2.0);
+          float lines = 0.5 + 0.5 * step(0.5, fract(vUv.y * 60.0));
+          float a = (0.06 + 0.05 * lines) * (1.0 - vUv.y) * edge * uA;
+          gl_FragColor = vec4(vec3(1.0, 0.75, 0.32) * a * 2.0, a);
+        }`,
+    })
+  );
+  scan.position.y = 13;
+  const scanLine = new THREE.Mesh(new THREE.BoxGeometry(120, 0.06, 0.06), new THREE.MeshBasicMaterial({ color: 0xffd98a, fog: false }));
+  scanLine.position.y = -3.9;
+  scene.add(scan, scanLine);
 
   /* ---------- Lucerna ---------- */
   const lampKey = new THREE.SpotLight(0xffd6a8, 0, 30, 0.5, 0.6, 1.2);
@@ -434,17 +432,13 @@ function init() {
   const lampPos = new THREE.Vector3(0.35, -0.4, LAMP_Z);   // centro visual de la lucerna (incluye la piquera)
 
   function cameraAt(p, out, look) {
-    const t = ease(THREE.MathUtils.clamp(p / 0.86, 0, 1));
-    const z = THREE.MathUtils.lerp(8, CAM_END, t);
-    let amp = 1 - sstep(0.62, 0.86, p);
-    amp *= sstep(3, 16, Math.abs(z - AQUEDUCT_Z));       // centrado al cruzar el arco
-    const x = Math.sin(p * Math.PI * 2.2) * 2.4 * amp;
-    const yEnd = 0.25;
-    const y = THREE.MathUtils.lerp(0.4 + Math.sin(p * Math.PI * 3) * 1.2 * amp, yEnd, sstep(0.7, 0.9, p));
+    const u = ease(THREE.MathUtils.clamp(p / 0.86, 0, 1));
+    const z = THREE.MathUtils.lerp(22, CAM_END, u);
+    const y = THREE.MathUtils.lerp(30, 0.25, sstep(0.45, 1, u));   // pasa por encima del acueducto
+    const x = Math.sin(u * Math.PI) * 6;
     out.set(x, y, z);
-    // mira hacia delante y, al final, a la lucerna
-    tmpLook.set(x * 0.4, y * 0.6, z - 12);
-    look.copy(tmpLook).lerp(lampPos, sstep(0.66, 0.88, p));
+    tmpLook.set(0, 3, z - 60);
+    look.copy(tmpLook).lerp(lampPos, sstep(0.55, 0.9, p));
   }
 
   /* ---------- Interacción ---------- */
@@ -516,12 +510,19 @@ function init() {
     sunLight.intensity = THREE.MathUtils.lerp(2.2, 0.35, sstep(0.2, 0.9, p));
     hemi.intensity = THREE.MathUtils.lerp(1.1, 0.45, sstep(0.3, 0.95, p));
 
-    // nubes: se desvanecen al acercarse y derivan despacio
-    for (const c of clouds) {
-      const d = c.position.z - camera.position.z;      // negativo = delante
-      const near = 1 - sstep(-9, -1.5, d);               // 1 cuando está lejos, 0 al tocarla
-      c.material.opacity = c.userData.base * near;
-      c.position.x += c.userData.drift * dt;
+    // escaneo: del año 25 a. C. a hoy, los monumentos pasan de alambre a piedra
+    const scanZ = THREE.MathUtils.lerp(14, LAMP_Z - 14, sstep(0.02, 0.8, p));
+    scan.position.z = scanLine.position.z = scanZ;
+    scan.material.uniforms.uA.value = 1 - sstep(0.75, 0.86, p);
+    scanLine.visible = p < 0.84;
+    grid.material.opacity = 0.32 * (1 - sstep(0.5, 0.9, p));
+    for (const pc of pieces) {
+      const r = 1 - sstep(pc.z - 4, pc.z + 4, scanZ);
+      if (Math.abs(r - pc.r) < 0.004) continue;
+      pc.r = r;
+      pc.mesh.material.opacity = r;
+      pc.mesh.material.depthWrite = r > 0.5;
+      pc.line.material.opacity = 0.85 * (1 - r) + 0.06;
     }
 
     // lucerna: gira sola y con el dedo
